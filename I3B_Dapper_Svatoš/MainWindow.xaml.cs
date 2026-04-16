@@ -1,4 +1,5 @@
 ﻿using I3B_Dapper_Svatoš.Data;
+using I3B_Dapper_Svatoš.Services;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,9 @@ namespace I3B_Dapper_Svatoš
             InitializeComponent();
             string connectionString = "Server=alaska;Database=[23IB25_SVATOS];Trusted_Connection=True;TrustServerCertificate=True";
             DatabaseConnectionFactory connectionFactory = new DatabaseConnectionFactory(connectionString);
+            MediaTypeRepository mediaTypeRepository = new MediaTypeRepository(connectionFactory);
+
+            mediaTypeService = new MediaTypeService(mediaTypeRepository);
         }
     }
 }
