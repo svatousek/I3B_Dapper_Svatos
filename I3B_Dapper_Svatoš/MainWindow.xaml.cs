@@ -27,5 +27,17 @@ namespace I3B_Dapper_Svatoš
 
             mediaTypeService = new MediaTypeService(mediaTypeRepository);
         }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                dgMediaType.ItemsSource = mediaTypeService.GetAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při načítání dat: {ex.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

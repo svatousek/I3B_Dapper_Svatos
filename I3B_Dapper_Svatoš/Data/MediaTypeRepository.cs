@@ -18,9 +18,9 @@ namespace I3B_Dapper_Svatoš.Data
             _connectionFactory = connectionFactory;
         }
 
-        public  List<MediaType> GetAll()
+        public List<MediaType> GetAll()
         {
-            string sql =@"
+            string sql = @"
                 Select *
                 From MediaType
                 Order By MediaTypeId; ";
@@ -30,6 +30,16 @@ namespace I3B_Dapper_Svatoš.Data
             List<MediaType> mediaTypes = conn.Query<MediaType>(sql).ToList();
 
             return mediaTypes;
+        }
+
+        public void Insert(MediaType mediaType)
+        {
+            string sql = @"
+                Insert Into MediaType (MediaTypeName)
+                Values (@MediaTypeName);";
+            using SqlConnection conn = _connectionFactory.CreateConnection();
+            conn.Execute(sql, mediaType);
+
         }
     }
 }

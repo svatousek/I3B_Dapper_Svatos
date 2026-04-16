@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="btnLoad" Grid.Row="0" Content="Načti data" Width="120" Height="30" HorizontalAlignment="Center"></Button>
+        <Button x:Name="btnLoad" Grid.Row="0" Content="Načti data" Width="120" Height="30" HorizontalAlignment="Center" Click="btnLoad_Click" Margin="0,32,0,372" Grid.RowSpan="2"></Button>
         
     </Grid>
 </Window>
