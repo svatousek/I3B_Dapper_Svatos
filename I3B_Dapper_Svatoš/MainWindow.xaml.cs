@@ -18,26 +18,30 @@ namespace I3B_Dapper_Svatoš
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static string connectionString = "Server=alaska;Database=23IB25_SVATOS;Trusted_Connection=True;TrustServerCertificate=True";
+        private static DatabaseConnectionFactory connectionFactory = new DatabaseConnectionFactory(connectionString);
+        private static MediaTypeRepository mediaTypeRepository = new MediaTypeRepository(connectionFactory);
+        private static MediaTypeService mediaTypeService = new MediaTypeService(mediaTypeRepository);
+
         public MainWindow()
         {
             InitializeComponent();
-            string connectionString = "Server=alaska;Database=[23IB25_SVATOS];Trusted_Connection=True;TrustServerCertificate=True";
-            DatabaseConnectionFactory connectionFactory = new DatabaseConnectionFactory(connectionString);
-            MediaTypeRepository mediaTypeRepository = new MediaTypeRepository(connectionFactory);
-
-            mediaTypeService = new MediaTypeService(mediaTypeRepository);
         }
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                dgMediaType.ItemsSource = mediaTypeService.GetAll();
+                var data = mediaTypeService.GetAll();
+                MessageBox.Show($"Počet záznamů: {data.Count}");
+
+                dgMediaType.ItemsSource = data;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Chyba při načítání dat: {ex.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{ex.Message}\n{ex.InnerException?.Message}");
             }
         }
     }
+
 }

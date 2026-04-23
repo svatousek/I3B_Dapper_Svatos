@@ -23,9 +23,11 @@ namespace I3B_Dapper_Svatoš.Data
             string sql = @"
                 Select *
                 From MediaType
-                Order By MediaTypeId; ";
+                Order By MediaTypeId ASC; ";
 
             using SqlConnection conn = _connectionFactory.CreateConnection();
+
+            conn.Open();
 
             List<MediaType> mediaTypes = conn.Query<MediaType>(sql).ToList();
 

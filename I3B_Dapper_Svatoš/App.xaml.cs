@@ -9,6 +9,7 @@ namespace I3B_Dapper_Svatoš
     /// </summary>
     public partial class App : Application
     {
+
     }
 
 }
