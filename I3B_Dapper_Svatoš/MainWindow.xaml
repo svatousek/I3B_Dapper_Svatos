@@ -29,6 +29,44 @@
 
             </StackPanel>
 
+            <!-- INSERT -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+
+                <TextBlock Text="Tabulka:"
+                   VerticalAlignment="Center"
+                   Margin="5"/>
+
+                <TextBox x:Name="txtInsertTable"
+                 Width="120"
+                 Height="30"
+                 Margin="5"/>
+
+                <TextBlock Text="Sloupec:"
+                   VerticalAlignment="Center"
+                   Margin="5"/>
+
+                <TextBox x:Name="txtColumn"
+                 Width="120"
+                 Height="30"
+                 Margin="5"/>
+
+                <TextBlock Text="Hodnota:"
+                   VerticalAlignment="Center"
+                   Margin="5"/>
+
+                <TextBox x:Name="txtData"
+                 Width="150"
+                 Height="30"
+                 Margin="5"/>
+
+                <Button Content="Insert"
+                Width="100"
+                Height="30"
+                Margin="5"
+                Click="btnInsert_Click"/>
+
+            </StackPanel>
+
             <!-- load -->
             <Button x:Name="btnLoad"
                     Content="Načti data"

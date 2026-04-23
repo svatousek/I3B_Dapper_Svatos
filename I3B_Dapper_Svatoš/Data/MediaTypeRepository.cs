@@ -34,13 +34,29 @@ namespace I3B_Dapper_Svatoš.Data
             return mediaTypes;
         }
 
-        public void Insert(MediaType mediaType)
+        public void InsertIntoTable(string tableName, string column, string data)
         {
-            string sql = @"
-                Insert Into MediaType (MediaTypeName)
-                Values (@MediaTypeName);";
+            // kontrola názvů (kvůli injection)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(tableName, @"^[a-zA-Z0-9_]+$") ||
+                !System.Text.RegularExpressions.Regex.IsMatch(column, @"^[a-zA-Z0-9_]+$"))
+            {
+                throw new Exception("Neplatný název tabulky nebo sloupce.");
+            }
+
+            string sql = $@"
+        IF EXISTS (SELECT * FROM sys.tables WHERE name = '{tableName}')
+        BEGIN
+            INSERT INTO {tableName} ({column})
+            VALUES (@Data)
+        END
+        ELSE
+        BEGIN
+            THROW 50000, 'Tabulka neexistuje', 1;
+        END";
+
             using SqlConnection conn = _connectionFactory.CreateConnection();
-            conn.Execute(sql, mediaType);
+            conn.Open();
+            conn.Execute(sql, new { Data = data });
         }
 
         public void CreateTable(string tableName)
@@ -56,5 +72,5 @@ namespace I3B_Dapper_Svatoš.Data
             conn.Open();
             conn.Execute(sql);
         }
-    }
+    }   
 }

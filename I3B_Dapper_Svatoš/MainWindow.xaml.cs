@@ -65,6 +65,31 @@ namespace I3B_Dapper_Svatoš
             }
         }
 
+        private void btnInsert_Click(object sender, RoutedEventArgs e)
+        {
+            string tableName = txtInsertTable.Text;
+            string column = txtColumn.Text;
+            string data = txtData.Text;
+
+            // základní validace
+            if (string.IsNullOrWhiteSpace(tableName) ||
+                string.IsNullOrWhiteSpace(column) ||
+                string.IsNullOrWhiteSpace(data))
+            {
+                MessageBox.Show("Vyplň všechny údaje (tabulka, sloupec, hodnota).");
+                return;
+            }
+
+            try
+            {
+                mediaTypeRepository.InsertIntoTable(tableName, column, data);
+                MessageBox.Show("Data byla vložena.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při insertu:\n{ex.Message}");
+            }
+        }
     }
 
 }
