@@ -41,7 +41,20 @@ namespace I3B_Dapper_Svatoš.Data
                 Values (@MediaTypeName);";
             using SqlConnection conn = _connectionFactory.CreateConnection();
             conn.Execute(sql, mediaType);
+        }
 
+        public void CreateTable(string tableName)
+        {
+            string sql = $@"
+        CREATE TABLE {tableName}
+        (
+            Id INT PRIMARY KEY IDENTITY(1,1),
+            Name NVARCHAR(67) NOT NULL
+        );";
+
+            using SqlConnection conn = _connectionFactory.CreateConnection();
+            conn.Open();
+            conn.Execute(sql);
         }
     }
 }
