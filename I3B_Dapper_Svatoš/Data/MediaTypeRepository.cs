@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using I3B_Dapper_Svatoš.Models;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -18,20 +17,12 @@ namespace I3B_Dapper_Svatoš.Data
             _connectionFactory = connectionFactory;
         }
 
-        public List<MediaType> GetAll()
+        public async Task<List<MediaType>> GetAllAsync()
         {
-            string sql = @"
-                Select *
-                From MediaType
-                Order By MediaTypeId ASC; ";
-
-            using SqlConnection conn = _connectionFactory.CreateConnection();
-
-            conn.Open();
-
-            List<MediaType> mediaTypes = conn.Query<MediaType>(sql).ToList();
-
-            return mediaTypes;
+            string sql = "SELECT * FROM MediaType ORDER BY MediaTypeId ASC";
+            using var conn = _connectionFactory.CreateConnection();
+            var result = await conn.QueryAsync<MediaType>(sql);
+            return result.ToList();
         }
 
         public void InsertIntoTable(string tableName, string column, string data)
