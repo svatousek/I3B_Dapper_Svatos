@@ -36,7 +36,6 @@ namespace I3B_Dapper_Svatoš.Data
 
         public void InsertIntoTable(string tableName, string column, string data)
         {
-            // kontrola názvů (kvůli injection)
             if (!System.Text.RegularExpressions.Regex.IsMatch(tableName, @"^[a-zA-Z0-9_]+$") ||
                 !System.Text.RegularExpressions.Regex.IsMatch(column, @"^[a-zA-Z0-9_]+$"))
             {

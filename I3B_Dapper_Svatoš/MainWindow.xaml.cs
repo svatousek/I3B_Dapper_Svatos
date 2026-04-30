@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace I3B_Dapper_Svatoš
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private static string connectionString = "Server=alaska;Database=23IB25_SVATOS;Trusted_Connection=True;TrustServerCertificate=True";
@@ -71,7 +68,6 @@ namespace I3B_Dapper_Svatoš
             string column = txtColumn.Text;
             string data = txtData.Text;
 
-            // základní validace
             if (string.IsNullOrWhiteSpace(tableName) ||
                 string.IsNullOrWhiteSpace(column) ||
                 string.IsNullOrWhiteSpace(data))
