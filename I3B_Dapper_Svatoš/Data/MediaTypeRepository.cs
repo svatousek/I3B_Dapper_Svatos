@@ -17,22 +17,17 @@ namespace I3B_Dapper_Svatoš.Data
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<List<MediaType>> GetAllAsync()
+        public async Task<List<T>> GetAllGenericAsync<T>(string tableName)
         {
-            string sql = "SELECT * FROM MediaType ORDER BY MediaTypeId ASC";
+            string sql = $"SELECT * FROM {tableName}";
+
             using var conn = _connectionFactory.CreateConnection();
-            var result = await conn.QueryAsync<MediaType>(sql);
+            var result = await conn.QueryAsync<T>(sql);
             return result.ToList();
         }
 
         public void InsertIntoTable(string tableName, string column, string data)
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(tableName, @"^[a-zA-Z0-9_]+$") ||
-                !System.Text.RegularExpressions.Regex.IsMatch(column, @"^[a-zA-Z0-9_]+$"))
-            {
-                throw new Exception("Neplatný název tabulky nebo sloupce.");
-            }
-
             string sql = $@"
         IF EXISTS (SELECT * FROM sys.tables WHERE name = '{tableName}')
         BEGIN
@@ -55,7 +50,7 @@ namespace I3B_Dapper_Svatoš.Data
         CREATE TABLE {tableName}
         (
             Id INT PRIMARY KEY IDENTITY(1,1),
-            Name NVARCHAR(67) NOT NULL
+            Name NVARCHAR(50) NOT NULL
         );";
 
             using SqlConnection conn = _connectionFactory.CreateConnection();

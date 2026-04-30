@@ -24,9 +24,24 @@ namespace I3B_Dapper_Svatoš
             InitializeComponent();
         }
 
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        private async void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            var repo = new GenericRepository(connectionFactory);
+            try
+            {
+                var repo = new GenericRepository(connectionFactory);
+                string tableName = tableNameBox.Text;
+                // 1. Zavoláte metodu (např. LoadData) a řeknete jí:
+                //    - <MediaType> -> jakou třídu má použít
+                //    - "MediaType" -> název tabulky v databázi
+                var data = await repo.LoadData<MediaType>(tableName);
+                dgMediaType.ItemsSource = data;
+
+                MessageBox.Show($"Načteno {data.Count} záznamů.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při načítání: {ex.Message}");
+            }
         }
 
         private void btnCreateTable_Click(object sender, RoutedEventArgs e)
